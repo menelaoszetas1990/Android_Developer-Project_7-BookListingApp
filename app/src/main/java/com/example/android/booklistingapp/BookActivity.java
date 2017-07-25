@@ -7,12 +7,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import static com.example.android.booklistingapp.R.id.search;
 
 public class BookActivity extends AppCompatActivity {
 
@@ -26,8 +27,8 @@ public class BookActivity extends AppCompatActivity {
     ArrayList<Book> bookList = new ArrayList<>();
     // Adapter for the list of books
     private BookAdapter bookAdapter;
-    // Edit text field used for searching for books
-    private EditText searchBook;
+    //SearchView
+    private SearchView searchBook;
     // TextView visible when there is a problem with the internet connection and the list is empty
     private TextView emptyStateTextView;
     // Progress bar visible when the internet connection is delayed or slow
@@ -42,10 +43,7 @@ public class BookActivity extends AppCompatActivity {
         ListView bookListView = (ListView) findViewById(R.id.list);
 
         // Find a reference to the EditText in the layout
-        searchBook = (EditText) findViewById(R.id.search);
-
-        // Find a reference to the Search Button in the layout
-        ImageButton buttonSearch = (ImageButton) findViewById(R.id.button_search);
+        searchBook = (SearchView) findViewById(search);
 
         // Find a reference to the empty state TextView
         emptyStateTextView = (TextView) findViewById(R.id.empty_view);
@@ -66,9 +64,14 @@ public class BookActivity extends AppCompatActivity {
         bookListView.setAdapter(bookAdapter);
 
         // Set a click listener to the ImageButton Search which sends query to the URL based on the user input
-        buttonSearch.setOnClickListener(new ImageButton.OnClickListener() {
+        searchBook.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
 
                 // Clear the adapter
                 bookAdapter.clear();
@@ -76,14 +79,12 @@ public class BookActivity extends AppCompatActivity {
                 // If there is a network connection, fetch data
                 if (checkInternetConnection()) {
 
-                    String searchUrl = searchBook.getText().toString();
                     // Show the circle indicator
                     loadingIndicator.setVisibility(View.VISIBLE);
 
                     // This is called when there is an internet connection.
                     // Start the AsyncTask to fetch the books data
-
-                    new BookAsyncTask().execute(BASE_URL + searchUrl);
+                    new BookAsyncTask().execute(BASE_URL + query);
 
                 } else {
                     Log.e(LOG_TAG, "No internet connection");
@@ -95,9 +96,11 @@ public class BookActivity extends AppCompatActivity {
                     // Update empty state with no connection error message
                     emptyStateTextView.setText(R.string.no_internet_connection);
                 }
-            }
-        });
 
+                return false;
+            }
+
+        });
 
         // create the book list
         if (savedInstanceState != null) {

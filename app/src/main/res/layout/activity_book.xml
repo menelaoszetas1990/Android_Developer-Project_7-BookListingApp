@@ -10,26 +10,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <SearchView
+            style="@style/search_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/search"
-                style="@style/search_box"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="7" />
-
-            <ImageButton
-                android:id="@+id/button_search"
-                style="@style/search_box_icon"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-        </LinearLayout>
+            android:id="@+id/search">
+        </SearchView>
 
         <!-- The list that will be created -->
         <ListView

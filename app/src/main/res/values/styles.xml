@@ -10,17 +10,9 @@
 
     <!-- Search Box style -->
     <style name="search_box">
-        <item name="android:hint">@string/search_box_hint_text</item>
         <item name="android:padding">@dimen/search_box_padding</item>
         <item name="android:textSize">@dimen/search_box_text_size</item>
         <item name="android:textColor">@android:color/black</item>
-        <item name="android:layout_alignParentBottom">true</item>
-    </style>
-
-    <!-- Search Box Icon style -->
-    <style name="search_box_icon">
-        <item name="android:src">@drawable/ic_search_black_36dp</item>
-        <item name="android:adjustViewBounds">true</item>
     </style>
 
     <!-- Title style-->
