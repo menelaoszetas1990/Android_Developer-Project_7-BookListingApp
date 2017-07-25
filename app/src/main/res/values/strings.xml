@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Book Listing App</string>
+
+    <!-- Search box hint text -->
+    <string name="search_box_hint_text">Search</string>
+
+    <!-- Error texts -->
+
+        <!-- When there is no book found  -->
+        <string name="no_books_found">No books found.</string>
+
+        <!-- When there is no internet connection -->
+        <string name="no_internet_connection">No internet connection.</string>
+
+</resources>
