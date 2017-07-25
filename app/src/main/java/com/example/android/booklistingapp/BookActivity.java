@@ -191,8 +191,8 @@ public class BookActivity extends AppCompatActivity {
             } else {
                 // Show the empty state with no connection error message
                 emptyStateTextView.setVisibility(View.VISIBLE);
-                // Update empty state with no connection error message
-                emptyStateTextView.setText(R.string.no_internet_connection);
+                // Update empty state with no books found error message
+                emptyStateTextView.setText(R.string.no_books_found);
             }
         }
     }
