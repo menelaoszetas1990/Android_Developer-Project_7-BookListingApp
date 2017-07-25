@@ -40,7 +40,7 @@
     </style>
 
     <!-- Description style -->
-    <style name="descriptio_style">
+    <style name="description_style">
         <item name="android:textSize">@dimen/description_text_size</item>
         <item name="android:paddingTop">@dimen/description_padding_top</item>
         <item name="android:paddingBottom">@dimen/description_padding_bottom</item>

@@ -12,7 +12,6 @@ import java.util.ArrayList;
 /**
  * A BookAdapter knows how to create a list item layout for each book
  * in the data source (a list of Book objects).
- * <p>
  * These list item layouts will be provided to an adapter view like ListView
  * to be displayed to the user.
  */
