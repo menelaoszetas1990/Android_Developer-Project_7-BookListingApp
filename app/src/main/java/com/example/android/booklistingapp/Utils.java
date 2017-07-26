@@ -102,49 +102,51 @@ public final class Utils {
             // Create a JSONObject from the JSON response string
             JSONObject baseJsonResponse = new JSONObject(bookJSON);
 
+
             // Extract the JSONArray associated with the key called "items" that holds all the info for the book
-            JSONArray bookArray = baseJsonResponse.getJSONArray(ITEMS);
+            if (baseJsonResponse.has(ITEMS)) {
+                JSONArray bookArray = baseJsonResponse.getJSONArray(ITEMS);
 
-            // For each book in the bookArray, create a Book object
-            for (int i = 0; i < bookArray.length(); i++) {
+                // For each book in the bookArray, create a Book object
+                for (int i = 0; i < bookArray.length(); i++) {
 
-                // Get a single book at position i within the list of books
-                JSONObject currentBook = bookArray.getJSONObject(i);
+                    // Get a single book at position i within the list of books
+                    JSONObject currentBook = bookArray.getJSONObject(i);
 
-                // For a given book, extract the JSONObject associated with the
-                // key called "volumeInfo", which represents a list of all information
-                // for a book.
-                JSONObject volumeInfo = currentBook.getJSONObject(VOLUME_INFO);
+                    // For a given book, extract the JSONObject associated with the
+                    // key called "volumeInfo", which represents a list of all information
+                    // for a book.
+                    JSONObject volumeInfo = currentBook.getJSONObject(VOLUME_INFO);
 
-                // get the title
-                String title = "";
-                if (volumeInfo.has(TITLE)) {
-                    // Extract the value for the key called "title"
-                    title = volumeInfo.getString(TITLE);
+                    // get the title
+                    String title = "";
+                    if (volumeInfo.has(TITLE)) {
+                        // Extract the value for the key called "title"
+                        title = volumeInfo.getString(TITLE);
+                    }
+
+                    // get the author
+                    String authors = "";
+                    if (volumeInfo.has(AUTHORS)) {
+                        // Extract the value for the key called "authors" and refactor it
+                        authors = volumeInfo.getString(AUTHORS);
+                        authors = authors.replaceAll("[\\[\\](){}]", "");
+                        authors = authors.replace("\"", "");
+                    }
+
+                    String description = "";
+                    if (volumeInfo.has(DESCRIPTION)) {
+                        // Extract the value for the key called "description"
+                        description = volumeInfo.getString(DESCRIPTION);
+                    }
+
+                    // Create a new Book object with the title, author and description from the JSON response.
+                    Book book = new Book(title, authors, description);
+
+                    // Add the new Book to the list of books.
+                    books.add(book);
                 }
-
-                // get the author
-                String authors = "";
-                if (volumeInfo.has(AUTHORS)) {
-                    // Extract the value for the key called "authors" and refactor it
-                    authors = volumeInfo.getString(AUTHORS);
-                    authors = authors.replaceAll("[\\[\\](){}]", "");
-                    authors = authors.replace("\"", "");
-                }
-
-                String description = "";
-                if (volumeInfo.has(DESCRIPTION)) {
-                    // Extract the value for the key called "description"
-                    description = volumeInfo.getString(DESCRIPTION);
-                }
-
-                // Create a new Book object with the title, author and description from the JSON response.
-                Book book = new Book(title, authors, description);
-
-                // Add the new Book to the list of books.
-                books.add(book);
             }
-
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
